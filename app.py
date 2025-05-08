@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = 'e9b1b2c77c3cf993c4e7b6f3e93984a55dd8024b9ef37b15c479789b98d5029a'
 
-# Update CORS configuration
+
 CORS(app, 
      origins=["http://localhost:3000", "http://127.0.0.1:3000"],
      supports_credentials=True,
@@ -332,18 +332,6 @@ def get_statuses():
 def get_image(filename):
     try:
         return send_from_directory(RESOURCES_FOLDER, filename)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route("/users", methods=["GET"])
-def get_users():
-    try:
-        users = User.query.all()
-        return jsonify([{
-            "id": user.id,
-            "username": user.username,
-            "email": user.email
-        } for user in users]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
